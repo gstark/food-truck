@@ -36,6 +36,8 @@ This will include:
 
 `rake db:migrate`
 
+*NOTE* If running locally you may need to `rake db:create db:migrate`
+
 ## Step 3
 
 Lets go try our app!
@@ -47,8 +49,8 @@ Add some code to ensure a name and a location
 In `app/models/truck.rb` add these lines between `class Truck` and `end`
 
 ```ruby
-  validates :name, presence: true
-  validates :location, presence: true
+validates :name, presence: true
+validates :location, presence: true
 ```
 
 ## Step 5
@@ -58,8 +60,8 @@ Lets have the computer automatically figure out the latitude / longitude of our 
 In `app/models/truck.rb` add these lines between `class Truck` and `end`
 
 ```ruby
-  geocoded_by :location
-  after_validation :geocode
+geocoded_by :location
+after_validation :geocode
 ```
 
 ## Step 6
@@ -80,20 +82,31 @@ after the line `Rails.application.routes.draw do`
 
 ## Step 8
 
-In the file `app/controllers/pages_controller`
-
-add this:
-
-
-```ruby
-def home
-  @trucks = Truck.all
-end
-```
+Visit our app again, seeing that we have a home page, albeit boring.
 
 ## Step 9
 
-Add a file `app/assets/stylesheets/map.scss`
+In the file `app/controllers/pages_controller`
+
+between `def home` and `end` add the following
+
+```ruby
+  @trucks = Truck.all
+```
+
+So the file looks like:
+
+```
+class PagesController < ApplicationController
+  def home
+    @trucks = Truck.all
+  end
+end
+```
+
+## Step 10
+
+Add the file `app/assets/stylesheets/map.scss`
 
 ```
 #map {
@@ -106,9 +119,9 @@ Add a file `app/assets/stylesheets/map.scss`
 }
 ```
 
-## Step 10
+## Step 11
 
-Create a file `app/views/pages/home.html.erb`
+Edit the file `app/views/pages/home.html.erb` replacing the contents with
 
 ```html
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.js"></script>
@@ -131,6 +144,6 @@ L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={
 </script>
 ```
 
-## Step 11
+## Step 12
 
 *Profit!*
