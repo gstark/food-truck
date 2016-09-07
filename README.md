@@ -99,7 +99,7 @@ So the file looks like:
 ```
 class PagesController < ApplicationController
   def home
-    @trucks = Truck.all
+    @trucks = Truck.where(latitude: nil).not.where(longitude: nil).not
   end
 end
 ```
