@@ -91,7 +91,7 @@ In the file `app/controllers/pages_controller`
 between `def home` and `end` add the following
 
 ```ruby
-  @trucks = Truck.all
+  @trucks = Truck.where.not(latitude: nil).where.not(longitude: nil)
 ```
 
 So the file looks like:
@@ -99,7 +99,7 @@ So the file looks like:
 ```
 class PagesController < ApplicationController
   def home
-    @trucks = Truck.where(latitude: nil).not.where(longitude: nil).not
+    @trucks = Truck.where.not(latitude: nil).where.not(longitude: nil)
   end
 end
 ```
